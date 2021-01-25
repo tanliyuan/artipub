@@ -4,7 +4,9 @@ const constants = require('../constants')
 class SegmentfaultSpider extends BaseSpider {
   async inputContent(article, editorSel) {
     const footerContent = `<br><b>本篇文章由一文多发平台<a href="https://github.com/crawlab-team/artipub" target="_blank">ArtiPub</a>自动发布</b>`
-    const content = article.content + footerContent
+    // const footerContent = "";
+    const content = article.content + footerContent;
+    console.log(content);
     const el = document.querySelector('.CodeMirror')
     el.CodeMirror.setValue(content)
   }
@@ -15,7 +17,7 @@ class SegmentfaultSpider extends BaseSpider {
 
   async afterInputEditor() {
     // 点击添加标签
-    await this.page.click('#add-tag-btn')
+    await this.page.click(".tag-wrap");
     await this.page.waitFor(3000)
 
     // 输入并选择标签
@@ -42,8 +44,11 @@ class SegmentfaultSpider extends BaseSpider {
       await this.page.waitFor(3000)
     }
 
-    // 点击发布文章
-    await this.page.click('#submitDiv > button')
+    //触发"发布文章"按钮的下拉列表
+    await this.page.click(".show ,.dropdown");
+    await this.page.waitFor(1000);
+    // 点击"确认发布"
+    await this.page.click("#sureSubmitBtn");
     await this.page.waitFor(1000)
   }
 

@@ -262,7 +262,8 @@ class BaseSpider {
    * 输入文章脚注
    */
   async inputFooter(article, editorSel) {
-    const footerContent = `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`;
+    // const footerContent = `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`;
+    const footerContent = "";
     const el = document.querySelector(editorSel.content);
     el.focus();
     document.execCommand('insertText', false, footerContent);
