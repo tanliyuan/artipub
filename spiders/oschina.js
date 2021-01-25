@@ -1,5 +1,8 @@
 const BaseSpider = require('./base')
 
+/**
+ * 开源中国
+ */
 class OschinaSpider extends BaseSpider {
   async goToEditor() {
     // 导航至首页
