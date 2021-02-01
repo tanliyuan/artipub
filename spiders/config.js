@@ -45,7 +45,7 @@ module.exports = {
     },
     editorSel: {
       title: 'input:not([name="name"])',
-      content: '#arthur-editor',
+      content: "#arthur-editor",
       publish: 'a[data-action="publicize"]'
     }
   },
@@ -117,7 +117,7 @@ module.exports = {
   cnblogs: {
     urls: {
       login: "",
-      editor: "https://i.cnblogs.com/articles/edit"
+      editor: "https://i.cnblogs.com/posts/edit"
     },
     loginSel: {
       username: "",
@@ -126,7 +126,7 @@ module.exports = {
     editorSel: {
       title: "#post-title",
       content: "#md-editor",
-      publish: 'button[data-el-locator="publishBtn"]'
+      publish: 'button[cnbellocator="publishBtn"]'
     }
   },
 
