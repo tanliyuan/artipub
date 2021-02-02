@@ -44,11 +44,9 @@ class BaseImportSpider extends BaseSpider {
       //如果是访问https页面 此属性会忽略https错误
       ignoreHTTPSErrors: true,
       devtools: false,
-      headless: enableChromeDebug !== 'Y',
-      args: [
-        '--no-sandbox',
-      ]
-    })
+      headless: enableChromeDebug !== "Y",
+      args: ["--no-sandbox"]
+    });
 
     // 页面
     this.page = await this.browser.newPage()
