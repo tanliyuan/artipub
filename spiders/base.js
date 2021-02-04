@@ -58,10 +58,13 @@ class BaseSpider {
       ignoreHTTPSErrors: true,
       // 打开开发者工具, 当此值为true时, headless总为false
       devtools: false,
+      //可以保存会话到本地文件夹，这样登陆一次，后面不用登录
+      // userDataDir: 'E:\\puppeteer',
 
       // 关闭headless模式, 不会打开浏览器
       headless: enableChromeDebug !== "Y",
-      args: ["--no-sandbox"]
+      args: ["--no-sandbox",  '--start-maximized'],
+      defaultViewport: null
     });
 
     // 页面
@@ -401,6 +404,13 @@ class BaseSpider {
   async checkCookieStatus() {
     // platform
     this.platform = await models.Platform.findOne({ _id: ObjectId(this.platformId) });
+
+    //百家号不支持 cookie，页面埋了token，只携带cookie 还是未登陆态，页面请求后会将token失效
+    if (this.platform.name === constants.platform.BAIJIAHAO) {
+      this.platform.loggedIn = false;
+      await this.platform.save();
+      return;
+    }
 
     const cookie = await this.getCookiesForAxios();
     if (!cookie) {
