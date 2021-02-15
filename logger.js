@@ -9,7 +9,7 @@ log4js.configure({
   },
   categories: {
     //appenders:采用的appender,取上面appenders项,level:设置级别
-    default: { appenders: ["out"], level: "debug" } 
+    default: { appenders: ["out"], level: "debug" }
   }
 });
 logger.level = 'debug'
