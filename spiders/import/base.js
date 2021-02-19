@@ -44,11 +44,9 @@ class BaseImportSpider extends BaseSpider {
       //如果是访问https页面 此属性会忽略https错误
       ignoreHTTPSErrors: true,
       devtools: false,
-      headless: enableChromeDebug !== 'Y',
-      args: [
-        '--no-sandbox',
-      ]
-    })
+      headless: enableChromeDebug !== "Y",
+      args: ["--no-sandbox"]
+    });
 
     // 页面
     this.page = await this.browser.newPage()
@@ -90,11 +88,16 @@ class BaseImportSpider extends BaseSpider {
       await this.page.goto(this.platform.url, { timeout: 60000 })
     } catch (e) {
       console.error(e)
-      await this.browser.close()
+      const pages = await this.browser.pages();
+      await Promise.all(pages.map(page => page.close()));
+      await this.browser.close();
       return []
     }
     await this.page.waitFor(5000)
     const articles = await this.fetchArticles()
+
+    const pages = await this.browser.pages();
+    await Promise.all(pages.map(page => page.close()));
     await this.browser.close()
     return articles
   }
@@ -114,6 +117,8 @@ class BaseImportSpider extends BaseSpider {
       await this.importArticle(siteArticle)
     }
 
+    const pages = await this.browser.pages();
+    await Promise.all(pages.map(page => page.close()));
     await this.browser.close()
 
     logger.info('imported articles')

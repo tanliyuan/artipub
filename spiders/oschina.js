@@ -1,5 +1,8 @@
 const BaseSpider = require('./base')
 
+/**
+ * 开源中国
+ */
 class OschinaSpider extends BaseSpider {
   async goToEditor() {
     // 导航至首页
@@ -24,7 +27,8 @@ class OschinaSpider extends BaseSpider {
   }
 
   async inputContent(article, editorSel) {
-    const footerContent = `<br><b>本篇文章由一文多发平台<a href="https://github.com/crawlab-team/artipub" target="_blank">ArtiPub</a>自动发布</b>`
+    // const footerContent = `<br><b>本篇文章由一文多发平台<a href="https://github.com/crawlab-team/artipub" target="_blank">ArtiPub</a>自动发布</b>`
+    const footerContent = "";
     const content = article.contentHtml + footerContent;
     const iframeWindow = document.querySelector('.cke_wysiwyg_frame').contentWindow
     const el = iframeWindow.document.querySelector(editorSel.content)

@@ -110,6 +110,24 @@ module.exports = {
       enableImport: false,
       enableLogin: true,
     },
+    {
+      name: constants.platform.DEVTOUTIAO,
+      label: '开发者头条',
+      editorType: constants.editorType.MARKDOWN,
+      url: 'https://toutiao.io/',
+      description: '使用开发者头条App，程序员可以阅读头条新闻、分享技术文章、发布开源项目',
+      enableImport: false,
+      enableLogin: false,
+    },
+    {
+      name: constants.platform.B_51CTO,
+      label: '51cto',
+      editorType: constants.editorType.MARKDOWN,
+      url: 'https://blog.51cto.com',
+      description: '51CTO学院为IT技术人员终生学习提供最丰富的课程资源库',
+      enableImport: false,
+      enableLogin: false,
+    },
   ],
 
   // 环境变量

@@ -58,11 +58,13 @@ class BaseSpider {
       ignoreHTTPSErrors: true,
       // 打开开发者工具, 当此值为true时, headless总为false
       devtools: false,
+      //可以保存会话到本地文件夹，这样登陆一次，后面不用登录
+      // userDataDir: 'E:\\puppeteer',
+
       // 关闭headless模式, 不会打开浏览器
-      headless: enableChromeDebug !== 'Y',
-      args: [
-        '--no-sandbox',
-      ],
+      headless: enableChromeDebug !== "Y",
+      args: ["--no-sandbox",  '--start-maximized'],
+      defaultViewport: null
     });
 
     // 页面
@@ -90,16 +92,10 @@ class BaseSpider {
     // 编辑器选择器
     this.editorSel = this.config.editorSel;
 
-    // 隐藏navigator
-    await this.page.evaluateOnNewDocument(() => {
-      Object.defineProperty(navigator, 'webdriver', {
-        get: () => false,
-      });
-    });
 
     // 脚注内容
     this.footerContent = {
-      richText: `<br><b>本篇文章由一文多发平台<a href="https://github.com/crawlab-team/artipub" target="_blank">ArtiPub</a>自动发布</b>`,
+      // richText: `<br><b>本篇文章由一文多发平台<a href="https://github.com/crawlab-team/artipub" target="_blank">ArtiPub</a>自动发布</b>`,
     };
   }
 
@@ -130,11 +126,10 @@ class BaseSpider {
       ignoreHTTPSErrors: true,
       // 打开开发者工具, 当此值为true时, headless总为false
       devtools: false,
+
       // 关闭headless模式, 不会打开浏览器
-      headless: enableChromeDebug !== 'Y',
-      args: [
-        '--no-sandbox',
-      ],
+      headless: enableChromeDebug !== "Y",
+      args: ["--no-sandbox"]
     });
 
     // 页面
@@ -182,7 +177,7 @@ class BaseSpider {
    * 设置Cookie
    */
   async setCookies() {
-    const cookies = await models.Cookie.find({ domain: { $regex: this.platform.name } });
+    const cookies = await models.Cookie.find({ domain: this.getCookieDomainCondition() });
     for (let i = 0; i < cookies.length; i++) {
       const c = cookies[i];
       await this.page.setCookie({
@@ -197,13 +192,20 @@ class BaseSpider {
    * 获取可给axios 使用的cookie
    */
   async getCookiesForAxios() {
-    const cookies = await models.Cookie.find({ domain: { $regex: this.platform.name } });
+    const cookies = await models.Cookie.find({ domain: this.getCookieDomainCondition() });
     let cookieStr = '';
     for (let i = 0; i < cookies.length; i++) {
       const c = cookies[i];
       cookieStr += `${c.name}=${c.value};`;
     }
     return cookieStr;
+  }
+
+  /**
+   * 域查询条件
+   */
+  getCookieDomainCondition() {
+    return { $regex: this.platform.name };
   }
 
   /**
@@ -262,7 +264,8 @@ class BaseSpider {
    * 输入文章脚注
    */
   async inputFooter(article, editorSel) {
-    const footerContent = `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`;
+    // const footerContent = `\n\n> 本篇文章由一文多发平台[ArtiPub](https://github.com/crawlab-team/artipub)自动发布`;
+    const footerContent = "";
     const el = document.querySelector(editorSel.content);
     el.focus();
     document.execCommand('insertText', false, footerContent);
@@ -309,7 +312,6 @@ class BaseSpider {
     // 发布文章
     const elPub = await this.page.$(this.editorSel.publish);
     await elPub.click();
-    await this.page.waitFor(10000);
 
     // 后续处理
     await this.afterPublish();
@@ -393,6 +395,8 @@ class BaseSpider {
     await this.afterFetchStats();
 
     // 关闭浏览器
+    const pages = await this.browser.pages();
+    await Promise.all(pages.map(page => page.close()));
     await this.browser.close();
   }
 
@@ -438,7 +442,7 @@ class BaseSpider {
           this.platform.loggedIn = text.includes('成功');
         } else if (this.platform.name === constants.platform.JIANSHU) {
           this.platform.loggedIn = text.includes('current_user');
-        } else if (this.platform.name === constants.platform.CNBLOGS) {
+        } else if ([constants.platform.CNBLOGS, constants.platform.B_51CTO].includes(this.platform.name)) {
           this.platform.loggedIn = text.includes('我的博客');
         } else if (this.platform.name === constants.platform.SEGMENTFAULT) {
           this.platform.loggedIn = text.includes('user_id');
