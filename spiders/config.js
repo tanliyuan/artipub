@@ -13,7 +13,8 @@ module.exports = {
       title: ".title-input",
       content: ".CodeMirror",
       publish: ".publish-btn"
-    }
+    },
+    publishNavigationChange: true
   },
 
   segmentfault: {
@@ -30,7 +31,8 @@ module.exports = {
       title: "[name=title]",
       content: ".CodeMirror",
       publish: "#sureSubmitBtn"
-    }
+    },
+    publishNavigationChange: true
   },
 
   jianshu: {
@@ -47,7 +49,8 @@ module.exports = {
       title: 'input:not([name="name"])',
       content: "#arthur-editor",
       publish: 'a[data-action="publicize"]'
-    }
+    },
+    publishNavigationChange: false
   },
 
   csdn: {
@@ -63,7 +66,8 @@ module.exports = {
       title: ".article-bar__title--input",
       content: ".editor__inner",
       publish: ".btn-b-red"
-    }
+    },
+    publishNavigationChange: false
   },
 
   devtoutiao: {
@@ -79,7 +83,8 @@ module.exports = {
       title: '#post_title',
       content: '.CodeMirror',
       publish: 'input[type=submit]'
-    }
+    },
+    publishNavigationChange: true
   },
 
   '51cto': {
@@ -95,7 +100,8 @@ module.exports = {
       title: '#title',
       content: '.CodeMirror',
       publish: '#submit'
-    }
+    },
+    publishNavigationChange: true
   },
 
   zhihu: {
@@ -111,7 +117,8 @@ module.exports = {
       title: ".WriteIndex-titleInput > .Input",
       content: ".public-DraftEditor-content",
       publish: ".PublishPanel-stepTwoButton"
-    }
+    },
+    publishNavigationChange: true
   },
 
   oschina: {
@@ -127,7 +134,8 @@ module.exports = {
       title: 'input[name="title"]',
       content: ".cke_editable",
       publish: ".submit"
-    }
+    },
+    publishNavigationChange: true
   },
 
   toutiao: {
@@ -143,7 +151,8 @@ module.exports = {
       title: ".editor-title textarea",
       content: ".ProseMirror",
       publish: ".publish-btn-last"
-    }
+    },
+    publishNavigationChange: true
   },
 
   cnblogs: {
@@ -159,7 +168,8 @@ module.exports = {
       title: "#post-title",
       content: "#md-editor",
       publish: 'button[cnbellocator="publishBtn"]'
-    }
+    },
+    publishNavigationChange: true
   },
 
   baijiahao: {
@@ -176,8 +186,8 @@ module.exports = {
       title: ".input-container .ant-input",
       content: "ueditor",
       publish: '.op-publish'
-    }
-
+    },
+    publishNavigationChange: true
   },
 
   v2ex: {
@@ -193,7 +203,8 @@ module.exports = {
       title: "#topic_title",
       content: "#editor",
       publish: ".super.normal.button"
-    }
+    },
+    publishNavigationChange: true
   },
 
   wechat: {
@@ -210,7 +221,8 @@ module.exports = {
       title: "",
       content: "",
       publish: ""
-    }
+    },
+    publishNavigationChange: true
   },
   aliyun: {
     urls: {
@@ -225,6 +237,7 @@ module.exports = {
       title: "#title",
       content: ".textarea",
       publish: ".next-btn-primary"
-    }
+    },
+    publishNavigationChange: true
   }
 };
